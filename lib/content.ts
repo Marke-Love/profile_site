@@ -593,17 +593,9 @@ export const ui = {
   contact: {
     eyebrow: t("Контакты", "Contact"),
     heading: t("Давайте поговорим", "Let's talk"),
-    lead: t(
-      "Рассматриваю позиции Python Backend Developer в Санкт-Петербурге и удалённо. Отвечаю в течение дня.",
-      "I'm considering Python backend roles in Saint Petersburg and remote. I reply within a day.",
-    ),
     copy: t("Скопировать", "Copy"),
     copied: t("Скопировано", "Copied"),
     marquee: t("Открыт к предложениям", "Open to offers"),
-  },
-  footer: {
-    built: t("Сайт собран на Next.js", "Built with Next.js"),
-    rights: t("Все данные — из актуального резюме", "All data comes from the current CV"),
   },
 };
 

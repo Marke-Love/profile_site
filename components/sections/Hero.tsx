@@ -88,7 +88,7 @@ export function Hero() {
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.8, delay: 0.9, ease: [0.16, 1, 0.3, 1] }}
               >
-                <Portrait className="h-[clamp(4rem,7.5vw,7rem)] w-[clamp(3.4rem,6vw,5.6rem)]" />
+                <Portrait className="h-[clamp(4.5rem,8vw,7.5rem)]" />
               </motion.span>
             </span>
           </h1>
@@ -103,7 +103,7 @@ export function Hero() {
             transition={{ duration: 0.8, delay: 1 }}
           >
             <div className="flex items-start gap-5">
-              <Portrait className="h-24 w-20 shrink-0 lg:hidden" />
+              <Portrait className="h-28 shrink-0 lg:hidden" />
               <p className="max-w-[34ch] text-balance text-lg leading-snug text-text sm:text-xl">
                 {t(person.tagline)}
               </p>

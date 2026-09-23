@@ -55,11 +55,7 @@ export function Contact() {
         <div className="mt-14 grid gap-12 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-5">
             <Reveal delay={0.06}>
-              <p className="max-w-[40ch] text-lg leading-relaxed text-muted">
-                {t(ui.contact.lead)}
-              </p>
-
-              <Magnetic className="mt-9 inline-block">
+              <Magnetic className="inline-block">
                 <a
                   href={contacts.telegram.href}
                   target="_blank"
@@ -86,11 +82,10 @@ export function Contact() {
       </div>
 
       <footer className="border-t hair">
-        <div className="shell flex flex-col gap-3 py-7 sm:flex-row sm:items-center sm:justify-between">
+        <div className="shell py-7">
           <p className="t-mono text-line-strong">
             {t(person.full)} · {new Date().getFullYear()}
           </p>
-          <p className="t-mono text-line-strong">{t(ui.footer.rights)}</p>
         </div>
       </footer>
     </section>

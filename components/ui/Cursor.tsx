@@ -23,18 +23,28 @@ export function Cursor() {
   useEffect(() => {
     if (!enabled) return;
 
+    // Pointer events fire far more often than the screen refreshes, and
+    // closest() walks the tree — so the hit test runs once per frame.
+    let frame = 0;
+    let latest: HTMLElement | null = null;
+
     const move = (event: PointerEvent) => {
       x.set(event.clientX);
       y.set(event.clientY);
       setVisible(true);
-      const target = event.target as HTMLElement | null;
-      setActive(Boolean(target?.closest("a, button, [data-cursor]")));
+      latest = event.target as HTMLElement | null;
+      if (frame) return;
+      frame = requestAnimationFrame(() => {
+        frame = 0;
+        setActive(Boolean(latest?.closest("a, button, [data-cursor]")));
+      });
     };
     const leave = () => setVisible(false);
 
     window.addEventListener("pointermove", move, { passive: true });
     document.addEventListener("pointerleave", leave);
     return () => {
+      if (frame) cancelAnimationFrame(frame);
       window.removeEventListener("pointermove", move);
       document.removeEventListener("pointerleave", leave);
     };

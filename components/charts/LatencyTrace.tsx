@@ -59,7 +59,7 @@ export function LatencyTrace() {
   return (
     <div
       ref={ref}
-      className="rounded-xl border hair bg-panel/60 p-4 backdrop-blur-sm sm:p-5"
+      className="rounded-xl border hair bg-panel/80 p-4 sm:p-5"
       data-cursor
     >
       <div className="mb-4 flex items-baseline justify-between gap-4">

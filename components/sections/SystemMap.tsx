@@ -1,7 +1,7 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
-import { useMemo, useState } from "react";
+import { motion, useInView, useReducedMotion } from "framer-motion";
+import { useMemo, useRef, useState } from "react";
 import { systemEdges, systemNodes, ui, type SystemNode } from "@/lib/content";
 import { useLang } from "@/lib/i18n/LanguageProvider";
 import { Reveal } from "@/components/ui/Reveal";
@@ -30,6 +30,9 @@ function edgePath(from: SystemNode, to: SystemNode) {
 export function SystemMap() {
   const { t } = useLang();
   const reduced = useReducedMotion();
+  const ref = useRef<HTMLDivElement>(null);
+  // SMIL runs on the main thread and never stops on its own.
+  const inView = useInView(ref, { margin: "200px 0px" });
   const [active, setActive] = useState<string | null>(null);
 
   const paths = useMemo(
@@ -51,7 +54,7 @@ export function SystemMap() {
       </SectionHeading>
 
       <Reveal>
-        <div className="overflow-x-auto rounded-lg border hair bg-panel/40 p-4 sm:p-6">
+        <div ref={ref} className="overflow-x-auto rounded-lg border hair bg-panel/40 p-4 sm:p-6">
           <svg
             viewBox="0 0 960 430"
             role="img"
@@ -69,7 +72,7 @@ export function SystemMap() {
                       strokeDasharray={edge.dashed ? "4 5" : undefined}
                       style={{ transition: "stroke .25s" }}
                     />
-                    {!reduced && (
+                    {!reduced && inView && (
                       <circle r={2.5} fill={on ? "#d2f94b" : "#3c4450"}>
                         <animateMotion
                           dur={`${2.6 + (edge.from.length % 3) * 0.5}s`}

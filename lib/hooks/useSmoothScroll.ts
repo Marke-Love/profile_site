@@ -13,7 +13,8 @@ export function useSmoothScroll() {
     if (reduced.matches) return;
 
     const lenis = new Lenis({
-      duration: 1.1,
+      // Long glides read as lag; this still eases but follows the wheel.
+      duration: 0.85,
       easing: (x: number) => Math.min(1, 1.001 - Math.pow(2, -10 * x)),
       smoothWheel: true,
     });

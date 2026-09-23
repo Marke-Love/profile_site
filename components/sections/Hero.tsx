@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import { contacts, person, ui } from "@/lib/content";
 import { useLang } from "@/lib/i18n/LanguageProvider";
 import { LatencyTrace } from "@/components/charts/LatencyTrace";
@@ -9,7 +9,6 @@ import { Portrait } from "@/components/ui/Portrait";
 import { SplitText } from "@/components/ui/SplitText";
 
 function Backdrop() {
-  const reduced = useReducedMotion();
   return (
     <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
       <div
@@ -21,17 +20,14 @@ function Backdrop() {
           maskImage: "radial-gradient(120% 90% at 50% 0%, #000 20%, transparent 78%)",
         }}
       />
-      <motion.div
-        className="absolute -left-[12%] top-[-18%] h-[46vw] w-[46vw] rounded-full blur-[120px]"
-        style={{ background: "radial-gradient(circle, rgba(210,249,75,0.16), transparent 68%)" }}
-        animate={reduced ? undefined : { x: [0, 60, 0], y: [0, 40, 0] }}
-        transition={{ duration: 22, repeat: Infinity, ease: "easeInOut" }}
-      />
-      <motion.div
-        className="absolute -right-[10%] top-[24%] h-[38vw] w-[38vw] rounded-full blur-[130px]"
-        style={{ background: "radial-gradient(circle, rgba(255,169,77,0.12), transparent 70%)" }}
-        animate={reduced ? undefined : { x: [0, -50, 0], y: [0, 50, 0] }}
-        transition={{ duration: 26, repeat: Infinity, ease: "easeInOut" }}
+      {/* Two pools of colour, painted as gradients rather than blurred
+          layers. Identical on screen, but nothing has to be re-blurred. */}
+      <div
+        className="hero-drift absolute -inset-[15%]"
+        style={{
+          backgroundImage:
+            "radial-gradient(38% 42% at 18% 8%, rgba(210,249,75,0.13), transparent 62%), radial-gradient(34% 38% at 88% 42%, rgba(255,169,77,0.10), transparent 64%)",
+        }}
       />
     </div>
   );

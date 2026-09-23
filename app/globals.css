@@ -126,7 +126,8 @@
 }
 
 @layer utilities {
-  /* Film grain. Kept very low so it reads as texture, not pattern. */
+  /* Film grain. Kept very low so it reads as texture, not pattern.
+     Promoted to its own layer so scrolling never repaints it. */
   .grain::after {
     content: "";
     position: fixed;
@@ -134,6 +135,7 @@
     z-index: 100;
     pointer-events: none;
     opacity: 0.04;
+    transform: translateZ(0);
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 
@@ -156,4 +158,22 @@
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* Slow drift for the hero background. A transform animation stays on the
+   compositor; the blurred layers this replaced were re-rasterised every
+   frame for the whole session, on-screen or not. */
+@keyframes hero-drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(2.5%, 2%, 0);
+  }
+}
+
+.hero-drift {
+  animation: hero-drift 30s ease-in-out infinite;
+  will-change: transform;
 }

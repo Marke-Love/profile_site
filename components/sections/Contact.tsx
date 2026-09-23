@@ -1,6 +1,7 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useInView, useReducedMotion } from "framer-motion";
+import { useRef } from "react";
 import { contacts, person, ui } from "@/lib/content";
 import { useLang } from "@/lib/i18n/LanguageProvider";
 import { CopyRow } from "@/components/ui/CopyRow";
@@ -10,14 +11,17 @@ import { Reveal } from "@/components/ui/Reveal";
 function Marquee() {
   const { t } = useLang();
   const reduced = useReducedMotion();
+  const ref = useRef<HTMLDivElement>(null);
+  // An endless loop is only worth running while someone can see it.
+  const inView = useInView(ref, { margin: "100px 0px" });
   const word = t(ui.contact.marquee);
   const run = Array.from({ length: 6 });
 
   return (
-    <div aria-hidden className="overflow-hidden border-y hair py-5">
+    <div ref={ref} aria-hidden className="overflow-hidden border-y hair py-5">
       <motion.div
         className="flex w-max gap-10 whitespace-nowrap"
-        animate={reduced ? undefined : { x: ["0%", "-50%"] }}
+        animate={reduced || !inView ? undefined : { x: ["0%", "-50%"] }}
         transition={{ duration: 26, repeat: Infinity, ease: "linear" }}
       >
         {[...run, ...run].map((_, index) => (

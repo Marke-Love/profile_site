@@ -11,7 +11,7 @@ export function LangSwitch() {
 
   return (
     <div
-      className="relative flex items-center gap-0.5 rounded-full border hair bg-panel/70 p-0.5 backdrop-blur"
+      className="relative flex items-center gap-0.5 rounded-full border hair bg-panel/90 p-0.5"
       role="group"
       aria-label="Language"
     >

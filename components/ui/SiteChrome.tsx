@@ -59,11 +59,10 @@ export function SiteChrome() {
       <motion.header
         className="fixed inset-x-0 top-0 z-40 border-b border-transparent"
         animate={{
-          backgroundColor: past ? "rgba(7,9,12,0.72)" : "rgba(7,9,12,0)",
+          backgroundColor: past ? "rgba(7,9,12,0.94)" : "rgba(7,9,12,0)",
           borderBottomColor: past ? "#1b2027" : "rgba(27,32,39,0)",
         }}
         transition={{ duration: 0.3 }}
-        style={{ backdropFilter: past ? "blur(12px)" : "none" }}
       >
         <div className="flex items-center justify-between px-[var(--gutter)] py-4">
           <motion.a

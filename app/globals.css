@@ -1,0 +1,159 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------
+   Design tokens
+   Palette is borrowed from observability tooling: a cold charcoal
+   surface, lime for "healthy / after", amber for "degraded / before".
+   Colour therefore carries meaning here, it is not decoration.
+------------------------------------------------------------------ */
+@theme {
+  --color-ink: #07090c;
+  --color-panel: #0d1014;
+  --color-panel-2: #12161c;
+  --color-line: #1b2027;
+  --color-line-strong: #2b323c;
+  --color-text: #e8ecef;
+  --color-muted: #79838f;
+  --color-acid: #d2f94b;
+  --color-acid-dim: #8ba830;
+  --color-amber: #ffa94d;
+
+  --font-display: var(--font-unbounded), system-ui, sans-serif;
+  --font-body: var(--font-golos), system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@layer base {
+  :root {
+    color-scheme: dark;
+    /* Horizontal rhythm shared by the rail and every section. */
+    --gutter: clamp(1.25rem, 5vw, 5rem);
+    --rail: 0px;
+  }
+
+  @media (min-width: 1100px) {
+    :root {
+      --rail: 84px;
+    }
+  }
+
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  html {
+    background: var(--color-ink);
+  }
+
+  body {
+    background: var(--color-ink);
+    color: var(--color-text);
+    font-family: var(--font-body);
+    font-synthesis-weight: none;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: clip;
+  }
+
+  ::selection {
+    background: var(--color-acid);
+    color: #05070a;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-acid);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  /* Lenis drives the scroll; keep the native fallback for reduced motion. */
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+}
+
+@layer components {
+  /* Display type: Unbounded, set tight and large. The Cyrillic in this
+     face is wide and geometric, so it needs negative tracking to hold
+     together at poster sizes. */
+  .t-display {
+    font-family: var(--font-display);
+    font-weight: 800;
+    line-height: 0.88;
+    letter-spacing: -0.045em;
+    text-transform: uppercase;
+  }
+
+  .t-heading {
+    font-family: var(--font-display);
+    font-weight: 700;
+    line-height: 1.02;
+    letter-spacing: -0.035em;
+  }
+
+  /* Utility type: monospace, uppercase, wide. Used for anything that is
+     data — units, labels, timestamps, HTTP verbs. */
+  .t-mono {
+    font-family: var(--font-mono);
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-size: 0.6875rem;
+  }
+
+  .t-num {
+    font-family: var(--font-mono);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.02em;
+  }
+
+  .shell {
+    padding-inline: var(--gutter);
+    margin-inline: auto;
+    max-width: 1440px;
+    width: 100%;
+  }
+
+  .hair {
+    border-color: var(--color-line);
+  }
+}
+
+@layer utilities {
+  /* Film grain. Kept very low so it reads as texture, not pattern. */
+  .grain::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    pointer-events: none;
+    opacity: 0.04;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .glow-acid {
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-acid) 45%, transparent),
+      0 0 32px -8px color-mix(in srgb, var(--color-acid) 55%, transparent);
+  }
+
+  .mask-fade-r {
+    mask-image: linear-gradient(to right, #000 78%, transparent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

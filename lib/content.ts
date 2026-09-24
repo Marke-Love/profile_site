@@ -527,7 +527,6 @@ export const ui = {
     cases: t("Кейсы", "Cases"),
     api: t("API", "API"),
     stack: t("Стек", "Stack"),
-    system: t("Система", "System"),
     education: t("Образование", "Education"),
     contact: t("Контакты", "Contact"),
   },
@@ -580,11 +579,6 @@ export const ui = {
     all: t("Всё", "All"),
     hint: t("Контекст применения — под каждым названием", "Context of use sits under each name"),
   },
-  system: {
-    eyebrow: t("Типовая архитектура", "A system I build"),
-    heading: t("Как это устроено", "How it fits together"),
-    hint: t("Наведите или коснитесь узла", "Hover or tap a node"),
-  },
   education: {
     eyebrow: t("Образование", "Education"),
     heading: t("Учился управлять и строить", "Trained to manage and to build"),
@@ -606,71 +600,6 @@ export const sections = [
   { id: "cases", label: ui.nav.cases },
   { id: "api", label: ui.nav.api },
   { id: "stack", label: ui.nav.stack },
-  { id: "system", label: ui.nav.system },
   { id: "education", label: ui.nav.education },
   { id: "contact", label: ui.nav.contact },
 ] as const;
-
-/* ----------------------------------------------------------- system map */
-
-export type SystemNode = {
-  id: string;
-  label: string;
-  kind: "edge" | "service" | "store" | "queue" | "worker" | "observe";
-  x: number;
-  y: number;
-  w: number;
-  h: number;
-  fact: L;
-};
-
-/** Coordinates live in the diagram's own 960×430 space. */
-export const systemNodes: SystemNode[] = [
-  {
-    id: "client", label: "Client", kind: "edge", x: 16, y: 170, w: 120, h: 58,
-    fact: t("Веб-клиенты и внешние системы ходят в один вход", "Web clients and external systems enter through one door"),
-  },
-  {
-    id: "api", label: "FastAPI", kind: "service", x: 190, y: 160, w: 150, h: 78,
-    fact: t("REST API на FastAPI: 400 мс на ключевых эндпоинтах", "REST API on FastAPI: 400 ms on key endpoints"),
-  },
-  {
-    id: "redis", label: "Redis", kind: "store", x: 400, y: 60, w: 132, h: 58,
-    fact: t("Кеш справочников: −60% обращений к базе", "Reference cache: −60% database round trips"),
-  },
-  {
-    id: "postgres", label: "PostgreSQL", kind: "store", x: 400, y: 150, w: 132, h: 58,
-    fact: t("Композитные индексы, переписанные JOIN, никаких N+1", "Composite indexes, rewritten JOINs, no N+1"),
-  },
-  {
-    id: "rabbit", label: "RabbitMQ", kind: "queue", x: 400, y: 268, w: 132, h: 58,
-    fact: t("События вместо синхронного REST: 800 → 450 мс", "Events instead of synchronous REST: 800 → 450 ms"),
-  },
-  {
-    id: "workers", label: "Workers", kind: "worker", x: 600, y: 268, w: 140, h: 58,
-    fact: t("До 2000 фоновых задач в сутки без блокировки API", "Up to 2,000 background jobs a day without blocking the API"),
-  },
-  {
-    id: "docs", label: "Documents", kind: "worker", x: 800, y: 214, w: 144, h: 50,
-    fact: t("Генерация и отправка 200+ документов в месяц", "Generating and submitting 200+ documents a month"),
-  },
-  {
-    id: "notify", label: "Notifications", kind: "worker", x: 800, y: 292, w: 144, h: 50,
-    fact: t("Уведомления и интеграции ушли из основного потока", "Notifications and integrations left the request path"),
-  },
-  {
-    id: "elk", label: "ELK + Grafana", kind: "observe", x: 190, y: 350, w: 190, h: 56,
-    fact: t("Диагностика инцидента: 45 минут вместо 3 часов", "Incident diagnosis: 45 minutes instead of 3 hours"),
-  },
-];
-
-export const systemEdges: { from: string; to: string; dashed?: boolean }[] = [
-  { from: "client", to: "api" },
-  { from: "api", to: "redis" },
-  { from: "api", to: "postgres" },
-  { from: "api", to: "rabbit" },
-  { from: "rabbit", to: "workers" },
-  { from: "workers", to: "docs" },
-  { from: "workers", to: "notify" },
-  { from: "api", to: "elk", dashed: true },
-];

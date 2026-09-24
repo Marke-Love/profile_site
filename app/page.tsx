@@ -5,7 +5,6 @@ import { Experience } from "@/components/sections/Experience";
 import { Cases } from "@/components/sections/Cases";
 import { ApiExplorer } from "@/components/sections/ApiExplorer";
 import { Stack } from "@/components/sections/Stack";
-import { SystemMap } from "@/components/sections/SystemMap";
 import { Education } from "@/components/sections/Education";
 import { Contact } from "@/components/sections/Contact";
 
@@ -19,7 +18,6 @@ export default function Home() {
       <Cases />
       <ApiExplorer />
       <Stack />
-      <SystemMap />
       <Education />
       <Contact />
     </main>
